@@ -9,7 +9,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import SingleTodo from './SingleTodo';
 import Grid from "@mui/material/Unstable_Grid2";
-import { useContext , useEffect } from 'react';
+import { useContext , useEffect,useMemo } from 'react';
 import { TodosContext } from '../Contexts/TodosContext';
 import { ModalContext } from '../Contexts/ModalContext';
 
@@ -20,8 +20,8 @@ export default function TodoList() {
   };
   const { modalOptions,setModalOptions} = useContext(ModalContext);
   const { toDos, setToDos } = useContext(TodosContext);
-  const completedTodos = toDos.filter((t) => t.done);
-  const notCompletedTodos = toDos.filter((t) => !t.done);
+  const completedTodos = useMemo(() => toDos.filter((t) => t.done),[toDos]) ;
+  const notCompletedTodos = useMemo(()=> toDos.filter((t) => !t.done),[toDos]);
   const filteredTodos = {
     all: toDos,
     done: completedTodos,
@@ -35,7 +35,7 @@ export default function TodoList() {
   const initialTodo = { title: '', description: '', done: '' };
   useEffect(() => { 
     const storedTodos = JSON.parse(localStorage.getItem('todos'));
-    if(storedTodos !== null)
+    if (storedTodos !== null)
       setToDos(storedTodos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -4,12 +4,14 @@ import './SingleTodo.css';
 import { useContext } from 'react';
 import { TodosContext } from '../Contexts/TodosContext';
 import { ModalContext } from '../Contexts/ModalContext';
+import { SnackBarContext } from '../Contexts/SnackBarContext';
 
 
 export default function SingleTodo({ todo }) { 
     
     const { toDos, setToDos } = useContext(TodosContext);
-    const { modalOptions,setModalOptions} = useContext(ModalContext);
+    const { modalOptions, setModalOptions } = useContext(ModalContext);
+    const { showSnackbar } = useContext(SnackBarContext);
     function handleCheck() {
         let newTodos = toDos.map((t) => {
             if (t.id === todo.id) {
@@ -19,6 +21,7 @@ export default function SingleTodo({ todo }) {
           });
         setToDos(newTodos);
         localStorage.setItem("todos", JSON.stringify(newTodos));
+        showSnackbar({messagee:"Todo is Updated"});
     }
     function handleDeleteClick() {
         setModalOptions({

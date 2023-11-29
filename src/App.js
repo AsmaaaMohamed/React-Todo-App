@@ -7,7 +7,7 @@ import {TodosContext} from "./Contexts/TodosContext";
 import { v4 as uuidv4 } from 'uuid';
 import MyModal from './Components/Modal';
 import { ModalContext } from './Contexts/ModalContext';
-
+import { SnackBarProvider } from './Contexts/SnackBarContext';
 function App() {
   const theme = createTheme({
     typography: {
@@ -40,7 +40,6 @@ function App() {
     },
   ];
   const [toDos, setToDos] = React.useState(standardToDos);
-  
   const initModal = {
     showModal: false,
     message: '',
@@ -49,19 +48,20 @@ function App() {
   }
   const [modalOptions, setModalOptions] = React.useState(initModal);
   let modalJsx = modalOptions.showModal ? <MyModal value={{modalOptions , setModalOptions} } /> : '';
-  
   return (
     <ThemeProvider theme={theme}>
-      <ModalContext.Provider value={{modalOptions,setModalOptions}}>
-        <div className="App" style={{position:'relative'}}>
-          <Container maxWidth="sm" className='main-content' >
-            <TodosContext.Provider value={{toDos,setToDos} } >
-              <TodoList />
-              {modalJsx}
-            </TodosContext.Provider>
-          </Container>
-        </div>
-      </ModalContext.Provider>
+      <SnackBarProvider>
+        <ModalContext.Provider value={{modalOptions,setModalOptions}}>
+          <div className="App" style={{position:'relative'}}>
+            <Container maxWidth="sm" className='main-content' >
+              <TodosContext.Provider value={{toDos,setToDos} } >
+                <TodoList />
+                {modalJsx}
+              </TodosContext.Provider>
+            </Container>
+          </div>
+          </ModalContext.Provider>
+        </SnackBarProvider>
     </ThemeProvider>
   );
 }

@@ -11,11 +11,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { v4 as uuidv4 } from 'uuid';
+import { SnackBarContext } from '../Contexts/SnackBarContext';
 
 export default function MyModal() {
     const { modalOptions, setModalOptions } = useContext(ModalContext);
     const { toDos, setToDos } = useContext(TodosContext);
-    
+    const { showSnackbar } = useContext(SnackBarContext);
     let newTodo =  modalOptions.todo ;
     //console.log(modalOptions);
     const textFields = modalOptions.type === 'Delete' ? '' :
@@ -35,6 +36,7 @@ export default function MyModal() {
         let newTodos = toDos.filter((t) =>t.id !== newTodo.id);
         setToDos(newTodos);
         localStorage.setItem("todos", JSON.stringify(newTodos));
+        showSnackbar({bool:true , messagee:"Todo is Deleted Successfully"});
         handleClose();
     }
     function handleModalUpdateClick() {
@@ -47,12 +49,14 @@ export default function MyModal() {
         })
         setToDos(updatedTodos);
         localStorage.setItem("todos", JSON.stringify(updatedTodos));
+        showSnackbar({ messagee:"Todo is Updated Succefully"});
         handleClose();
     }
     function handleModalAddClick() {
         const newTodos = [...toDos, { ...newTodo, id: uuidv4() }];
         setToDos(newTodos);
         localStorage.setItem("todos", JSON.stringify(newTodos));
+        showSnackbar({messagee:"Todo is Added Succefully"});
         handleClose();
     }
     return (
