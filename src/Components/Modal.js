@@ -18,7 +18,6 @@ export default function MyModal() {
     const { toDos, setToDos } = useContext(TodosContext);
     const { showSnackbar } = useContext(SnackBarContext);
     let newTodo =  modalOptions.todo ;
-    //console.log(modalOptions);
     const textFields = modalOptions.type === 'Delete' ? '' :
         <><TextField value={newTodo.title} autoFocus margin="dense" id="title" label="Title" type="text" fullWidth variant="standard" onChange={(e) => { newTodo.title = e.target.value; setModalOptions({ ...modalOptions, todo: newTodo }) }} /><TextField value={newTodo.description} autoFocus margin="dense" id="desc" label="Description" type="text" fullWidth variant="standard" onChange={(e) => { newTodo.description = e.target.value; setModalOptions({ ...modalOptions, todo: newTodo }) }} /></>;
     const handleClicksFuncs = {
@@ -59,31 +58,32 @@ export default function MyModal() {
         showSnackbar({messagee:"Todo is Added Succefully"});
         handleClose();
     }
-    return (
-        <>
-            <Dialog
-            open={modalOptions.showModal}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {modalOptions.modalTitle}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {modalOptions.message}
-                    </DialogContentText>
-                    {textFields}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClicksFuncs[modalOptions.type]} disabled={newTodo.title.length <= 0} autoFocus>
-                        {modalOptions.type}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+    if (modalOptions.showModal)
+        return (
+            <>
+                <Dialog
+                open={modalOptions.showModal}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {modalOptions.modalTitle}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {modalOptions.message}
+                        </DialogContentText>
+                        {textFields}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClicksFuncs[modalOptions.type]} disabled={newTodo.title.length <= 0} autoFocus>
+                            {modalOptions.type}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </>
     );
 
 }

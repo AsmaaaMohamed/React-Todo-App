@@ -18,7 +18,7 @@ export default function TodoList() {
   const handleFilterChange = (event) => {
     setFilterTasks(event.target.value);
   };
-  const { modalOptions,setModalOptions} = useContext(ModalContext);
+  const { setModalOptions} = useContext(ModalContext);
   const { toDos, setToDos } = useContext(TodosContext);
   const completedTodos = useMemo(() => toDos.filter((t) => t.done),[toDos]) ;
   const notCompletedTodos = useMemo(()=> toDos.filter((t) => !t.done),[toDos]);

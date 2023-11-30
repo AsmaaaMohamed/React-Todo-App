@@ -10,7 +10,7 @@ import { SnackBarContext } from '../Contexts/SnackBarContext';
 export default function SingleTodo({ todo }) { 
     
     const { toDos, setToDos } = useContext(TodosContext);
-    const { modalOptions, setModalOptions } = useContext(ModalContext);
+    const { setModalOptions } = useContext(ModalContext);
     const { showSnackbar } = useContext(SnackBarContext);
     function handleCheck() {
         let newTodos = toDos.map((t) => {
