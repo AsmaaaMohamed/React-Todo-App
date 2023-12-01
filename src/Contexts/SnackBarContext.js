@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import CustomizedSnackbars from "../Components/CustomizedSnackbars";
+import CustomizedSnackbars from "../components/CustomizedSnackbars";
 
 export const SnackBarContext = createContext('');
 export function SnackBarProvider({children}) {

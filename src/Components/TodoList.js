@@ -9,9 +9,9 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import SingleTodo from './SingleTodo';
 import Grid from "@mui/material/Unstable_Grid2";
-import { useContext , useEffect,useMemo } from 'react';
-import { TodosContext } from '../Contexts/TodosContext';
-import { ModalContext } from '../Contexts/ModalContext';
+import { useContext , useEffect,useMemo,useReducer } from 'react';
+import { TodosContext } from '../contexts/TodosContext';
+import { ModalContext } from '../contexts/ModalContext';
 
 export default function TodoList() {
   const [filterTasks, setFilterTasks] = React.useState('all');
@@ -19,9 +19,10 @@ export default function TodoList() {
     setFilterTasks(event.target.value);
   };
   const { setModalOptions} = useContext(ModalContext);
-  const { toDos, setToDos } = useContext(TodosContext);
+  const { toDos, dispatch } = useContext(TodosContext);
   const completedTodos = useMemo(() => toDos.filter((t) => t.done),[toDos]) ;
   const notCompletedTodos = useMemo(()=> toDos.filter((t) => !t.done),[toDos]);
+  console.log('todods' + toDos.length);
   const filteredTodos = {
     all: toDos,
     done: completedTodos,
@@ -32,11 +33,12 @@ export default function TodoList() {
       <SingleTodo key={toDo.id} todo={toDo}/>
     )
   });
-  const initialTodo = { title: '', description: '', done: '' };
+  const initialTodo = { id:'',title: '', description: '', done: '' };
   useEffect(() => { 
     const storedTodos = JSON.parse(localStorage.getItem('todos'));
     if (storedTodos !== null)
-      setToDos(storedTodos);
+      //setToDos(storedTodos);
+    console.log('ddd')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   

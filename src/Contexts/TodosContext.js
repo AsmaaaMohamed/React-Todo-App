@@ -1,5 +1,6 @@
-import { createContext , useState } from "react";
+import { createContext , useState,useReducer } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import reducer from '../reducers/TodosReducer';
 
 export const TodosContext = createContext([]);
 export function TodosProvider({ children }) {
@@ -23,10 +24,11 @@ export function TodosProvider({ children }) {
           done: false
         },
       ];
-    const [toDos, setToDos] = useState(standardToDos);
+      const[toDos , dispatch] = useReducer(reducer , standardToDos)
+    //const [toDos, setToDos] = useState(standardToDos);
     return (
         
-        <TodosContext.Provider value={{ toDos, setToDos }}>
+        <TodosContext.Provider value={{ toDos, dispatch }}>
             {children}
         </TodosContext.Provider>
     )

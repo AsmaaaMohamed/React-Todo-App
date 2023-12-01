@@ -1,26 +1,19 @@
 import {Card,CardContent,Typography,IconButton} from '@mui/material';
 import { Edit,Done,DeleteForever } from '@mui/icons-material';
 import './SingleTodo.css';
-import { useContext } from 'react';
-import { TodosContext } from '../Contexts/TodosContext';
-import { ModalContext } from '../Contexts/ModalContext';
-import { SnackBarContext } from '../Contexts/SnackBarContext';
+import { useContext , useReducer } from 'react';
+import { TodosContext } from '../contexts/TodosContext';
+import { ModalContext } from '../contexts/ModalContext';
+import { SnackBarContext } from '../contexts/SnackBarContext';
 
 
 export default function SingleTodo({ todo }) { 
     
-    const { toDos, setToDos } = useContext(TodosContext);
+    const { toDos, dispatch } = useContext(TodosContext);
     const { setModalOptions } = useContext(ModalContext);
     const { showSnackbar } = useContext(SnackBarContext);
     function handleCheck() {
-        let newTodos = toDos.map((t) => {
-            if (t.id === todo.id) {
-              t.done = !t.done;
-            }
-            return t;
-          });
-        setToDos(newTodos);
-        localStorage.setItem("todos", JSON.stringify(newTodos));
+        dispatch({type:"checked" , payload:todo});
         showSnackbar({messagee:"Todo is Updated"});
     }
     function handleDeleteClick() {
