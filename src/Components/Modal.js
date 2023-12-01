@@ -1,5 +1,5 @@
 import './Modal.css';
-import { useContext , useEffect } from 'react';
+import { useContext  } from 'react';
 import { ModalContext } from '../Contexts/ModalContext';
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -17,7 +17,7 @@ export default function MyModal() {
     const { modalOptions, setModalOptions } = useContext(ModalContext);
     const { toDos, setToDos } = useContext(TodosContext);
     const { showSnackbar } = useContext(SnackBarContext);
-    let newTodo =  modalOptions.todo ;
+    let newTodo =  {...modalOptions.todo} ;
     const textFields = modalOptions.type === 'Delete' ? '' :
         <><TextField value={newTodo.title} autoFocus margin="dense" id="title" label="Title" type="text" fullWidth variant="standard" onChange={(e) => { newTodo.title = e.target.value; setModalOptions({ ...modalOptions, todo: newTodo }) }} /><TextField value={newTodo.description} autoFocus margin="dense" id="desc" label="Description" type="text" fullWidth variant="standard" onChange={(e) => { newTodo.description = e.target.value; setModalOptions({ ...modalOptions, todo: newTodo }) }} /></>;
     const handleClicksFuncs = {
