@@ -9,7 +9,7 @@ import { SnackBarContext } from '../contexts/SnackBarContext';
 
 export default function SingleTodo({ todo }) { 
     
-    const { toDos, dispatch } = useContext(TodosContext);
+    const { dispatch } = useContext(TodosContext);
     const { setModalOptions } = useContext(ModalContext);
     const { showSnackbar } = useContext(SnackBarContext);
     function handleCheck() {

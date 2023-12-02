@@ -1,5 +1,5 @@
 import './Modal.css';
-import { useContext , useReducer  } from 'react';
+import { useContext  } from 'react';
 import { ModalContext } from '../contexts/ModalContext';
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -10,7 +10,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { v4 as uuidv4 } from 'uuid';
 import { SnackBarContext } from '../contexts/SnackBarContext';
 
 

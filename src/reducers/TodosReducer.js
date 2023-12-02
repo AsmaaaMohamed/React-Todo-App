@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export default function reducer(currentTodos , action){
+export default function reducer(currentTodos, action) {
+    
     switch(action.type){
         case "added":{
             const newTodos = [...currentTodos, { ...action.payload, id: uuidv4() }];
@@ -37,7 +38,13 @@ export default function reducer(currentTodos , action){
             localStorage.setItem("todos", JSON.stringify(newTodos));
             return newTodos;
         }
-        
+        case "loadStorage": {
+            const storedTodos = JSON.parse(localStorage.getItem('todos'));
+            if (storedTodos !== null)
+                return storedTodos;
+            else
+                return currentTodos;
+        }
         default:{
             throw Error("Unknown Action" + action.type);
         }
